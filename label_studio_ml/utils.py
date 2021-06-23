@@ -89,9 +89,9 @@ def get_local_path(url, cache_dir=None, project_dir=None, hostname=None, image_d
 
     # File reference created with --allow-serving-local-files option
     if is_local_file:
-        filename, dir_path = url.split('/data/')[1].split('?d=')
-        dir_path = str(urllib.parse.unquote(dir_path))
-        filepath = os.path.join(dir_path, filename)
+        filename = url.split('?d=')[1]
+        # assumes posix paths, but it works
+        filepath = '/' + str(urllib.parse.unquote(filename))
         if not os.path.exists(filepath):
             raise FileNotFoundError(filepath)
         return filepath
